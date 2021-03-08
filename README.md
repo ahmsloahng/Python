@@ -1,2 +1,3 @@
 ### Important Python libraries and examples
 1) Pandas
+2) csv: Read csv and update csv functions are added in the CSV class in csv.py. Reading an input from csv file itself is very fast and sometimes better than using dataframes. 
