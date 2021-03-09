@@ -29,3 +29,4 @@ class CSV:
                 for row in reader:
                     row.append('Joy Mohun Bagan')
                     writer.writerow(row)
+                return writer
