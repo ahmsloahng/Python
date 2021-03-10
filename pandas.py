@@ -21,3 +21,7 @@ class Pandas:
     ''' 2) Checking if dataframe is empty'''
     def check_if_empty_df(self):
         return self.dataframe.empty #Returns Boolean value   
+    
+    ''' 3) Creating dictionary from dataframe with two columns'''
+    def create_dictionary(self):
+        return self.dataframe.groupby(['Column1']).sum().to_dict['Column2'] #sums all the values corresponding to the values in Column1
