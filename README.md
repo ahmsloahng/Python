@@ -7,3 +7,4 @@
 3) Output to csv: Printing an output to csv file or excel file using pandas. 
 4) read_write.py: 
 	a) Writing to a file
+5) pulp.py: Writing model in pulp
