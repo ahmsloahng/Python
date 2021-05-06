@@ -9,3 +9,4 @@
 4) read_write.py: 
 	a) Writing to a file
 5) pulp.py: Writing model in pulp
+6) Tkinter: Building basic UI. Components: Window, Frame, Label, Entry, Button.
