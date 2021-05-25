@@ -3,7 +3,8 @@
 	a) Filtering subdataframe based on column values (single and multiple).
 	b) Checking if dataframe is empty.
 	c) Dataframe to dictionary.
-	d) Reading excel file and converting to dataframe.
+	d) Reading excel,csv file and converting to dataframe.
+	e) Accessing and using elements of dataframe row by row.
 2) csv: Read csv and update csv functions are added in the CSV class in csv.py. Reading an input from csv file itself is very fast and sometimes better than using dataframes.
 3) Output to csv: Printing an output to csv file or excel file using pandas. 
 4) read_write.py: 

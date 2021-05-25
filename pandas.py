@@ -8,11 +8,12 @@ import pandas as pd
 
 class Pandas:
     
-    def __init__(self, dataframe, value, iterator, excel):
+    def __init__(self, dataframe, value, iterator, excel, csv):
         self.dataframe = dataframe
         self.value = value
         self.iterator = iterator
         self.excel = excel
+        self.csv = csv
         
     ''' 1) Filtering subset of dataframe with respect to values in a column'''
     def subdataframe_singlevalue(self):
@@ -29,6 +30,14 @@ class Pandas:
     def create_dictionary(self):
         return self.dataframe.groupby(['Column1']).sum().to_dict['Column2'] #sums all the values corresponding to the values in Column1
     
-    ''' 4) Reading from excel file and sheet'''
-    def excel_reading(self):
-        return self.pd.read_excel(self.excel, sheet_name = None)
+    ''' 4) Reading from file'''
+    def reading(self):
+        if excel_data:
+            return self.pd.read_excel(self.excel, sheet_name = None)
+        elif csv_data:
+            return self.pd.read_csv(self.csv, delimeter = ',')
+    
+    '''5) Reading row by row of a dataframe'''
+    def read_rowbyrow(self):
+        for row in self.dataframe.itertuples(): #whole row is a tuple, values are obtained from using tuple index, first element is dataframe index
+            continue
