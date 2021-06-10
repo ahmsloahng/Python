@@ -19,5 +19,5 @@ def djikstra(dist_mat, nodes): #dist_mat: dictionary {node1: {node2: 2, node3: 4
                 dist = opt_dist[j]
         for neighbour in dist_mat[node]:
             opt_dist[neighbour] = min(opt_dist[neighbour], opt_dist[node] + dist_mat[node][neighbour])
-        del not_visited[0]
+        not_visited.remove(node)
     print (opt_dist)    
