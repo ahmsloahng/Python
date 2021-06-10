@@ -17,3 +17,5 @@
 	d) Executing functions using inputs
 	e) Displaying results
 7) Opening any file (not for reading or writing). open_any_file.py
+8) Shortest Path:
+	a) Djikstra's Shortest Path
