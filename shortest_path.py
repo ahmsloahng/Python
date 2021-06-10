@@ -11,8 +11,11 @@ def djikstra(dist_mat, nodes): #dist_mat: dictionary {node1: {node2: 2, node3: 4
     opt_dist[0] = 0
     not_visited = list(i for i in range(25))
     for i in range(nodes):
-        not_visited.sort(key = lambda x: opt_dist[x])
         node = not_visited[0]
+        dist = opt_dist[node]
+        for j in not_visited:
+            if opt_dist[j] < dist:
+                node = j
         for neighbour in dist_mat[node]:
             opt_dist[neighbour] = min(opt_dist[neighbour], opt_dist[node] + dist_mat[node][neighbour])
         del not_visited[0]
