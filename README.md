@@ -19,4 +19,6 @@
 7) Opening any file (not for reading or writing). open_any_file.py
 8) Shortest Path:
 	a) Djikstra's Shortest Path
-9) Backtracking Examples.
+9) Various coding test examples.
+10) MST:
+	a) Prim's Algorithm: Example with complete graph and 0-1 edges.
