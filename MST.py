@@ -46,3 +46,27 @@ for _ in range(N-1):
     mst_t.remove(q)
     weight += G[track][q]
 print (weight)
+
+'''Prim's with priority queue'''
+import heapq
+N,M = map(int, input().split())
+G = {}
+for i in range(N):
+    G[i] = {}
+    for j in range(N):
+        G[i][j] = 0
+for i in range(M):
+    u,v = map(int, input().split())
+    G[u][v] = 1
+    G[v][u] = 1
+mst = [0]
+mst_t = [i for i in range(1,N)]
+weight = 0
+for _ in range(N-1):
+    temp = [(G[i][j], (i,j)) for j in mst_t for i in mst]
+    heapq.heapify(temp)
+    node = heapq.heappop(temp)
+    mst.append(node[1][1])
+    mst_t.remove(node[1][1])
+    weight += node[0]
+print (weight)
