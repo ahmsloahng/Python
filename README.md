@@ -20,7 +20,8 @@
 8) Shortest Path:
 	a) Djikstra's Shortest Path
 	b) Djikstra's Shortest Path with Priority Queue (heapq python library)
-9) Various coding test examples.
+9) Various coding test examples are added.
 10) MST:
 	a) Prim's Algorithm: Example with complete graph and 0-1 edges.
 	b) Prims's Algorithm with Priority Queue (heapq python library)
+11) Dynamic Programming examples are added.
