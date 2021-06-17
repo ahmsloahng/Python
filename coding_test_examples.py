@@ -69,3 +69,30 @@ st = ''
 for j in range(len(q)):
     st += sorted(h[j])[q[j]]
 print (st)
+
+'''Given a dictionary of N words. Given a query string S. Count the number of ways in which the query string can be constructed as a concatenation of two different words chosen from the dictionary. (here different means choosing different indices of the words).
+Note - Two indices can have the same word in the dictionary. (i.j) and (j,i) are treated in separate ways.'''
+
+n = int(input())
+k = {}
+for i in range(n):
+    o = str(input())
+    if len(o) in k:
+        k[len(o)].append(o)
+    else:
+        k[len(o)] = [o]
+q = str(input())
+count = 0
+for i in k:
+    if len(q)-i in k and i != len(q)-i:
+        for a in k[i]:
+            for b in k[len(q)-i]:
+                if a + b == q:
+                    count += 2
+if len(q)%2 == 0:
+    if len(q)/2 in k:
+        for i in range((len(q)/2)-1):
+            for j in range(i+1,len(q)/2):
+                if k[len(q)/2][i] + k[len(q)/2][j] == q:
+                    count += 2
+print (count)
