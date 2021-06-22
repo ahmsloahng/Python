@@ -25,3 +25,4 @@
 	a) Prim's Algorithm: Example with complete graph and 0-1 edges.
 	b) Prims's Algorithm with Priority Queue (heapq python library)
 11) Dynamic Programming examples are added.
+12) json: Reading and writing in json files are added.
