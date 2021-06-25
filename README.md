@@ -26,3 +26,5 @@
 	b) Prims's Algorithm with Priority Queue (heapq python library)
 11) Dynamic Programming examples are added.
 12) json: Reading and writing in json files are added.
+13) graph.py: Graph algorithms are added.
+	a) Depth First Search: To find connection between two nodes. 
