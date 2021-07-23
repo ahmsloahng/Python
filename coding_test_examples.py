@@ -53,9 +53,11 @@ h = []
 i = 0
 while i<= N-1:
     if i+X > N:
-        h.append(s[i:])
+        a = ''.join(list(set([i for i in s[i:]])))
+        h.append(a)
     else:
-        h.append(s[i:i+X])
+        a = ''.join(list(set([i for i in s[i:i+X]])))
+        h.append(a)
     i += X
 K -= 1
 q = [0]*len(h)
