@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Mar 10 01:28:57 2021
-
 @author: Amlan Ghosh
 """
 import pandas as pd
@@ -27,3 +26,9 @@ df = pd.DataFrame(temp_data, colums = ['Column1', 'Column2'])
 
 df.to_csv(path, index = False)
 df.to_excel(path, sheet_name = 'Sheet Name', index = False)
+
+''' multiple sheets in a single excel file '''
+with pd.ExcelWriter(path) as writer:
+    df.to_excel(writer, sheet_name= 'sheet', index = False)
+    df1.to_excel(writer, sheet_name = 'sheet_1', index = False)
+
