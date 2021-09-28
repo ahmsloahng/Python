@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Mar 10 01:38:57 2021
-
 @author: Amlan Ghosh
 """
 import pandas as pd
 
 class Pandas:
     
-    def __init__(self, dataframe, value, iterator, excel, csv):
+    def __init__(self, dataframe, value, value1, iterator, excel, csv):
         self.dataframe = dataframe
         self.value = value
+        self.value1 = value1
         self.iterator = iterator
         self.excel = excel
         self.csv = csv
@@ -41,3 +41,8 @@ class Pandas:
     def read_rowbyrow(self):
         for row in self.dataframe.itertuples(): #whole row is a tuple, values are obtained from using tuple index, first element is dataframe index
             continue
+    
+    ''' 6) Filtering dataframe based on multiple values of a column '''
+    def filter_data(self):
+        return self.dataframe[(self.dataframe['Column1'] == self.value) | (self.dataframe['Column1'] == self.value1)] # | is representing OR
+
