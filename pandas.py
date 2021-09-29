@@ -45,4 +45,7 @@ class Pandas:
     ''' 6) Filtering dataframe based on multiple values of a column '''
     def filter_data(self):
         return self.dataframe[(self.dataframe['Column1'] == self.value) | (self.dataframe['Column1'] == self.value1)] # | is representing OR
+    
+    ''' 7) Replacing some values in a column '''
+    self.dataframe['Column1'].replace({'value1': 'value2'}, inplace = True)
 
