@@ -30,3 +30,9 @@
 12) json: Reading and writing in json files are added.
 13) graph.py: Graph algorithms are added.
 	a) Depth First Search: To find connection between two nodes. 
+14) oop.py: Basic fundamentals of oop added. 
+    a) Contains declaring class and object. 
+    b) Instance and class variable. 
+    c) instance, class and static method.
+    d) using class variable in instance method.
+    e) using instance method in instance method.
