@@ -30,5 +30,13 @@ def arima(df):
     forecast_horizon = 7 # How many months we want to forecast
     forecast = fit.forecast(steps = forecast_horizon) # model forecast
     '''Result contains a df with forecast column and datetime as index'''
-    
+
+def exp_smooth(df):
+    '''Input: Dataframe - Date column and Value column'''
+    df.set_index(date_col, inplace = True) # set date column to index
+    model = ExponentialSmoothing(df[vol_col], trend = 'add') # define the model
+    fit = model.fit() # model train
+    forecast_horizon = 7 # How many months we want to forecast
+    forecast = fit.forecast(steps = forecast_horizon) # model forecast
+    '''Result contains a df with forecast column and datetime as index'''    
     
