@@ -6,6 +6,7 @@ Created on Thu Jun 19 07:43:56 2025
 """
 import pandas as pd
 from statsmodel.tsa.holtwinters import ExponentialSmoothing
+from statsmodel.tsa.arima.model import ARIMA
 
 date_col = 'Date'
 vol_col = 'Volume'
@@ -18,6 +19,16 @@ def winter_holts(df):
                                  seasonal_periods = 12) # define the model
     fit = model.fit() # model train
     forecast_horizon = 7 # How many months we want to forecast
-    forecast = fit.forecast(7) # model forecast
+    forecast = fit.forecast(steps = forecast_horizon) # model forecast
+    '''Result contains a df with forecast column and datetime as index'''
+
+def arima(df):
+    '''Input: Dataframe - Date column and Value column'''
+    df.set_index(date_col, inplace = True) # set date column to index
+    model = ARIMA(df[vol_col], order = (0,0,3)) # define the model
+    fit = model.fit() # model train
+    forecast_horizon = 7 # How many months we want to forecast
+    forecast = fit.forecast(steps = forecast_horizon) # model forecast
+    '''Result contains a df with forecast column and datetime as index'''
     
     
