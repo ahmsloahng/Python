@@ -78,6 +78,25 @@ def fourier_poisson_sarimax(df):
     fit = model.fit() # model train
     forecast = fit.forecast(steps = forecast_steps, exog = future_exog) # model forecast    
     '''Result contains a df with forecast column and datetime as index'''
+
+from prophet import Prophet
+
+def prophet(df, future_exogenous_var_list):
+    '''Input dataframe:
+            1. date column must be named: 'ds'
+            2. sales column must be named: 'y'
+            3. exogenous variable can be added
+            4. a dataframe with future dataes with exogenous variable (if any)
+            needs to be created or provided
+    '''
+    model = Prophet(interval_width = 0.8) # The confidence interval for prediction
+    model.add_regressor('Exogenous Variable') # Method to add exogenos variable as many
+    model.fit(df)
+    future = model.make_future_dataframe(periods = 12, freq = 'MS',
+                                         include_history = True)
+    future['Exogeneous Variable'] = future_exogenous_var_list
+    forecast = model.predict(future)
+    '''Returns forecast in column 'yhat' with prediction interval'''
     
 '''Transformations'''
 from scipy.stats import boxcox
