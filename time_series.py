@@ -8,6 +8,7 @@ import pandas as pd
 from statsmodel.tsa.holtwinters import ExponentialSmoothing
 from statsmodel.tsa.arima.model import ARIMA
 from statsmodel.tsa.statespace.structural import UnobservedComponents
+from statsmodel.tsa.seasonal import STL
 
 date_col = 'Date'
 vol_col = 'Volume'
@@ -22,6 +23,7 @@ def statsmodel_models(df):
         3. TES
         4. ARIMA
         5. BSTS
+        6. STL
     '''
     
     # Exponential Smoothing
@@ -41,6 +43,10 @@ def statsmodel_models(df):
     #BSTS
     model = UnobservedComponents(df[vol_col], level = 'local level', 
                                  trend = True, seasonal = 12) # define the model
+    
+    # STL
+    model = STL(df[vol_col], seasonal = 7) # define the model
+    
     fit = model.fit() # model train
     forecast_horizon = 7 # How many months we want to forecast
     forecast = fit.forecast(steps = forecast_horizon) # model forecast
@@ -99,6 +105,7 @@ def prophet(df, future_exogenous_var_list):
     '''Returns forecast in column 'yhat' with prediction interval'''
     
 '''Transformations'''
+import scipy.stats as st
 from scipy.stats import boxcox
 from scipy.special import inv_boxcox
 
@@ -106,11 +113,24 @@ def scipy_transformations(df):
     
     '''Covers:
         1. Boxcox
+        2. Seasonal differene Boxcox
     '''
     
     # Boxcox transformation
     df['Transformed Column'], lam = boxcox(df['Column'])
     df['Column'] = inv_boxcox(df['Transformed Column'], lam)
+    
+    # Seasonal difference Boxcox
+    
+    # Transforation
+    s = 12 # The season where the data needs to be substracteed
+    df['Differenced Column'] = df['Column'].diff(s)
+    df['Transformed Column'], lam = boxcox(df['Column']) # ensure values are positive
+    # Inverse trnsformation
+    result_df = pd.DataFrame({'Tranfered Column':[]}) # the result column which we will get from forecast results
+    df['Transformed Column'] = inv_boxcox(result_df['Transformed Column'], lam)
+    df['Shifted Column'] = df['Column'].shift(s)
+    df['Column'] = df['Transformed Column'] + df['Shifted Column'] # take care of the index while adding
 
 from sklearn.preprocessing import PowerTransformer
 
@@ -159,6 +179,28 @@ def numpy_transformation(df):
     df['Inversed Penetration'] = 1/(1 + np.exp(-df['Transformed Column']))
     df['Sum Column'] = [sum(df['Previous Column'])] * len(df) # Previous column is the column before transformation
     df['Column'] = df['Inversed Penetration'] * df['Sum Column']
+
+def other_transformation(df):
+    '''Input: dataframe with column for quantity and date as index'''
+    
+    '''Covers:
+        1. Rolling Z-score
+    '''
+    
+    # Rolling Z-score
+    
+    # Transformation
+    window = 12
+    med = df.rolling(window, center = True).median()
+    iqr = (df.rolling(window, center  = True).quantile(0.75) 
+           - df.rolling(window, center = True).quantile(0.25))
+    z = (df - med)/(iqr + 1e-9)
+    med = med.dropna()
+    iqr = iqr.dropna()
+    z = z.fillna(0)
+    # Inverse transformation
+    df['Column'] = (df['Transfered Column'] * iqr['Column'].iloc[-1] + 
+                    med['Column'].iloc[-1])
 
 '''Hypothesis test for stationarity'''
 from statsmodels.tsa.stattools import adfuller
