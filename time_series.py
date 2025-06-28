@@ -107,6 +107,7 @@ def prophet(df, future_exogenous_var_list):
 '''Transformations'''
 import scipy.stats as st
 from scipy.stats import boxcox
+from scipy.stats import johnsonsu
 from scipy.special import inv_boxcox
 
 def scipy_transformations(df):
@@ -114,6 +115,8 @@ def scipy_transformations(df):
     '''Covers:
         1. Boxcox
         2. Seasonal differene Boxcox
+        3. Rank Gaussianisation
+        4. Johnson SU
     '''
     
     # Boxcox transformation
@@ -131,6 +134,26 @@ def scipy_transformations(df):
     df['Transformed Column'] = inv_boxcox(result_df['Transformed Column'], lam)
     df['Shifted Column'] = df['Column'].shift(s)
     df['Column'] = df['Transformed Column'] + df['Shifted Column'] # take care of the index while adding
+    
+    # Rank Gaussianisation
+    
+    # Transformation
+    r = st.rankdata(df['Column'], method = 'average')
+    u = (r - 0.5)/len(df)
+    z = st.norm.ppf(u)
+    # Inverse transformation
+    u = st.norm.cdf(z)
+    q = np.quantile(df['Column'], u, interpolation = 'nearest')
+    
+    # Johnson SU
+    
+    # Transformation
+    params = johnsonsu.fit(df['Column'])
+    gamma, delta, xi, lamb = params
+    df['Transformed Column'] = johnsonsu(gamma, delta, xi, lamb).cdf(df['Column'])
+    # Inverse transformation
+    df['Column'] = johnsonsu(gamma, delta, xi, lamb).ppf(df['Transformed Column'])
+    
 
 from sklearn.preprocessing import PowerTransformer
 
@@ -158,6 +181,7 @@ def numpy_transformation(df):
         1. Inverse Hyperbolic Sine
         2. Log difference
         3. Penetration Logit
+        4. Sign log(1+x), Wincorcised
     '''
     
     # Inverse Hyperbolic Sine
@@ -179,6 +203,16 @@ def numpy_transformation(df):
     df['Inversed Penetration'] = 1/(1 + np.exp(-df['Transformed Column']))
     df['Sum Column'] = [sum(df['Previous Column'])] * len(df) # Previous column is the column before transformation
     df['Column'] = df['Inversed Penetration'] * df['Sum Column']
+    
+    # Sign log(1+x), Wincorcised
+    
+    # Transformation
+    clip = 3 # define clip
+    y_c = np.clip(df['Column'], -clip, clip) # winsorise
+    df['Transformed Column'] = np.sign(y_c) + np.log1p(np.abs(y_c))
+    # Inverse transformation
+    df['Column'] = np.sign(df['Transformed Column']) * (np.expm1(
+        np.abs(df["Transformed Column"])))
 
 def other_transformation(df):
     '''Input: dataframe with column for quantity and date as index'''
