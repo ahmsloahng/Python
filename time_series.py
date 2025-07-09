@@ -22,7 +22,7 @@ def statsmodel_models(df):
         2. Winter-Holts
         3. TES
         4. ARIMA
-        5. BSTS
+        5. BSTS + Conformal prediction
         6. STL
     '''
     
@@ -50,6 +50,12 @@ def statsmodel_models(df):
     fit = model.fit() # model train
     forecast_horizon = 7 # How many months we want to forecast
     forecast = fit.forecast(steps = forecast_horizon) # model forecast
+    
+    # conformal prediction for bsts
+    fitted_values = fit.fittedvalues
+    residuals = np.abs(df[vol_col] - fitted_values)
+    alpha = 0.05 # 90% percentile
+    q = np.quantile(residuals, 1 - alpha) # value need to added or substracted to get the maximum or minimum
     '''Result contains a df with forecast column and datetime as index'''
 
 from statsmodel.tsa.statespace.sarimax import SARIMAX
@@ -102,6 +108,13 @@ def prophet(df, future_exogenous_var_list):
                                          include_history = True)
     future['Exogeneous Variable'] = future_exogenous_var_list
     forecast = model.predict(future)
+    
+    # conformal prediction
+    train_forecast = model.predict(df)
+    residuals = np.abs(df['y'].values - train_forecast['yhat'].values)
+    alpha = 0.05 # 90% percentile
+    q = np.quantile(residuals, 1 - alpha) # value need to added or substracted to get the maximum or minimum
+    
     '''Returns forecast in column 'yhat' with prediction interval'''
     
 '''Transformations'''
