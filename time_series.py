@@ -43,11 +43,22 @@ def statsmodel_models(df):
     #BSTS
     model = UnobservedComponents(df[vol_col], level = 'local level', 
                                  trend = True, seasonal = 12) # define the model
+    # BSTS with exogenous variable.
+    # consider df having one or more exogenous variable called ExogVar1, ExogVar2 like this. We will take one at a time to check the causality
+    model = UnobservedComponents(endog = df[vol_col], level = 'local level',
+                                 trend = True, seasonal = 12,
+                                 exog = df[['ExogVar1']])
     
     # STL
     model = STL(df[vol_col], seasonal = 7) # define the model
     
     fit = model.fit() # model train
+    
+    # Print the summary
+    print (fit.summary())
+    print (fit.params) # get the coefficients of exogenous variables and other parameters. The fourth value in the list is for exogenous variables.
+    print (fit.pvalues) # get the pvalues of exogenous variables and other parameters, The fourth value in the list is for exogenous variables.
+    
     forecast_horizon = 7 # How many months we want to forecast
     forecast = fit.forecast(steps = forecast_horizon) # model forecast
     
