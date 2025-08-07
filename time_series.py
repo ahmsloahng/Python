@@ -123,7 +123,7 @@ def prophet(df, future_exogenous_var_list):
     # conformal prediction
     train_forecast = model.predict(df)
     residuals = np.abs(df['y'].values - train_forecast['yhat'].values)
-    alpha = 0.05 # 90% percentile
+    alpha = 0.05 # 95% percentile
     q = np.quantile(residuals, 1 - alpha) # value need to added or substracted to get the maximum or minimum
     
     '''Returns forecast in column 'yhat' with prediction interval'''
