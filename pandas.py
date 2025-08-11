@@ -7,7 +7,7 @@ import pandas as pd
 
 class Pandas:
     
-    def __init__(self, dataframe, value, value1, iterator, excel, csv):
+    def __init__(self, dataframe, value, value1, iterator, excel, csv, data_type):
         self.dataframe = dataframe
         self.value = value
         self.value1 = value1
@@ -56,4 +56,9 @@ class Pandas:
         return self.dataframe.groupby('Column1').agg({
             'Column2':'sum',
             'Column3':'mean'}).reset_index()
+    
+    '''9) Writing in multple sheets of excel'''
+    def multiplesheetinexcel(self):
+        with pd.ExcelWriter('Excel File.xlsx', engine = 'openpyxl') as writer:
+            self.dataframe.to_excel(writer, sheet_name = 'sheet', index = False)
 
