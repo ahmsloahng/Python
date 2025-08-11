@@ -62,3 +62,6 @@ class Pandas:
         with pd.ExcelWriter('Excel File.xlsx', engine = 'openpyxl') as writer:
             self.dataframe.to_excel(writer, sheet_name = 'sheet', index = False)
 
+    '''10) Sort the dataframe by a column'''
+    def sort(self):
+        return self.dataframe.sort_values(by = 'Column1', ascending = True)
