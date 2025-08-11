@@ -14,6 +14,7 @@ class Pandas:
         self.iterator = iterator
         self.excel = excel
         self.csv = csv
+        self.data_type = data_type
         
     ''' 1) Filtering subset of dataframe with respect to values in a column'''
     def subdataframe_singlevalue(self):
@@ -32,9 +33,9 @@ class Pandas:
     
     ''' 4) Reading from file'''
     def reading(self):
-        if excel_data:
+        if self.data_type == 'excel':
             return self.pd.read_excel(self.excel, sheet_name = None)
-        elif csv_data:
+        elif self.data_type == 'csv':
             return self.pd.read_csv(self.csv, delimeter = ',')
     
     '''5) Reading row by row of a dataframe'''
@@ -47,5 +48,12 @@ class Pandas:
         return self.dataframe[(self.dataframe['Column1'] == self.value) | (self.dataframe['Column1'] == self.value1)] # | is representing OR
     
     ''' 7) Replacing some values in a column '''
-    self.dataframe['Column1'].replace({'value1': 'value2'}, inplace = True)
+    def replace(self):
+        return self.dataframe['Column1'].replace({'value1': 'value2'}, inplace = True)
+    
+    '''8) Groupby and aggregate'''
+    def groupbyagg(self):
+        return self.dataframe.groupby('Column1').agg({
+            'Column2':'sum',
+            'Column3':'mean'}).reset_index()
 
