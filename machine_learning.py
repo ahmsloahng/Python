@@ -15,6 +15,7 @@ Created on Fri Jun 27 21:54:22 2025
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import GradientBoostingRegressor
+import xgboost as xgb
 
 def regression(data):
     
@@ -39,6 +40,15 @@ def regression(data):
     
     # Gradient Boost Regression
     model = GradientBoostingRegressor(random_state = 42)
+    
+    # XGBoost Regression
+    model = xgb.XGBRegressor(
+        objective = 'reg:squarederror',
+        n_estimators = 100,
+        learning_rate = 0.1,
+        max_depth = 3,
+        random_state = 42
+        )
     
     model.fit(train_data, y_train) # Train the data
     model.predict(test_data) # Predict
