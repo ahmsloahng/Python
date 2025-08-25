@@ -8,3 +8,9 @@ Created on Fri May  7 21:39:05 2021
 import os
 file = 'file location'
 os.startfile(file)
+
+folder = 'folder'
+subfolder = 'subfolder'
+
+# join folder and file path, any number of inputs
+path = os.path.join(folder,subfolder,file)
