@@ -14,3 +14,6 @@ subfolder = 'subfolder'
 
 # join folder and file path, any number of inputs
 path = os.path.join(folder,subfolder,file)
+
+# get all the files from a folder
+file_list = [f for f in os.listdir(folder)]
