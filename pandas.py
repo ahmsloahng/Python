@@ -65,3 +65,7 @@ class Pandas:
     '''10) Sort the dataframe by a column'''
     def sort(self):
         return self.dataframe.sort_values(by = 'Column1', ascending = True)
+    
+    '''11) Count the number of occurrence of a value in a column'''
+    def count_frequency(self,col,val):
+        return (col == val).sum()
