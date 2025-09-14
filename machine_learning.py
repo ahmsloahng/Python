@@ -5,7 +5,10 @@ Created on Fri Jun 27 21:54:22 2025
 @author: Amlan Ghosh
 """
 
-'''Continuous Prediction Value
+''' Discrete Prediction Value
+    1. Logistic Regression -> statsmodel
+    
+    Continuous Prediction Value
     1. Regression -> numpy
         1.1. Random Forest Regression -> scikit learn
         1.2. Gradient Boost Regression -> scikit learn
@@ -16,6 +19,23 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 import xgboost as xgb
+import statsmodels.api as sm
+
+def LogisticRegression(data):
+    
+    '''1. statsmodel'''
+    
+    '''Input: a dataframe with X column lists and y column'''
+    y,X = data['y'], data['X']
+    model = sm.Logit(y,X) # call the model
+    result = model.fit() # fit the model
+    
+    beta = result.params # coefficient of variabls
+    aor = np.exp(beta) # Adjusted Odds Ratio
+    conf = result.conf_int() # Confidence Interval
+    conf.columns = ['Lower CI','Upper CI'] # Confidence interval columns
+    p_values = result.pvalues # p-values
+    
 
 def regression(data):
     
