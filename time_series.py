@@ -5,10 +5,10 @@ Created on Thu Jun 19 07:43:56 2025
 @author: Amlan Ghosh
 """
 import pandas as pd
-from statsmodel.tsa.holtwinters import ExponentialSmoothing
-from statsmodel.tsa.arima.model import ARIMA
-from statsmodel.tsa.statespace.structural import UnobservedComponents
-from statsmodel.tsa.seasonal import STL
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.statespace.structural import UnobservedComponents
+from statsmodels.tsa.seasonal import STL
 
 date_col = 'Date'
 vol_col = 'Volume'
@@ -53,6 +53,11 @@ def statsmodel_models(df):
     model = STL(df[vol_col], seasonal = 7) # define the model
     
     fit = model.fit() # model train
+    
+    # for STL
+    trend = fit.trend.dropna()
+    trend_model = ExponentialSmoothing(trend, trend = 'add')
+    fit = trend_model.fit()
     
     # Print the summary
     print (fit.summary())
