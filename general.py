@@ -11,3 +11,9 @@ if k == 10:
     print ('No error')
 else:
     raise ValueError('Error')
+    
+# sort dictionary
+def sort_dictionary(dic):
+    sorted_items = sorted(dic.items(), key = lambda x:x[1])
+    sorted_dic = {k:v for k,v in sorted_items}
+    return sorted_dic
