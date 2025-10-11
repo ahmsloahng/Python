@@ -84,6 +84,25 @@ idx = 0
 instance_shap_values = shap_values[idx]
 instance_base_value = explainer.expected_value[idx]
 
+abs_sum = abs(instance_shap_values).sum()
+
+contrib_pct = 100 * abs(instance_shap_values)/abs_sum
+
+df_instance_contrib = pd.DataFrame({
+    'Feature':df_test.columns,
+    'SHAP value': instance_shap_values,
+    'Contribution %': contrib_pct
+    })
+
+df_instance_contrib['abs_shap'] = df_instance_contrib['SHAP value'].abs()
+df_instance_contrib = df_instance_contrib.sort_values('abs_shap', 
+                                                      ascending = False).drop(
+                                                          columns = 'abs_shap')
+
+print (f'\nFeature contributions for instance {idx}:')
+print (df_instance_contrib)
+                                                          
+                                                    
 explanation = shap.Explanation(
     values = instance_shap_values,
     base_values = instance_base_value,
