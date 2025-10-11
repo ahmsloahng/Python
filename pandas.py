@@ -4,6 +4,7 @@ Created on Wed Mar 10 01:38:57 2021
 @author: Amlan Ghosh
 """
 import pandas as pd
+import numpy as np
 
 class Pandas:
     
@@ -50,6 +51,10 @@ class Pandas:
     ''' 7. Replacing some values in a column '''
     def replace(self):
         return self.dataframe['Column1'].replace({'value1': 'value2'}, inplace = True)
+    def replace_on_condition(self):
+        mask = self.dataframe['Column1'] == 'value1' # can be >, < also
+        self.dataframe.loc[mask,'Column1'] = 'value2'
+        return self.dataframe
     
     '''8. Groupby and aggregate'''
     def groupbyagg(self):
@@ -74,3 +79,8 @@ class Pandas:
     def percentage_change(self):
         self.dataframe['MoM Revenue Growth'] = self.dataframe['Revenue'].pct_change()
         return self.dataframe
+    
+    '''13. Create a dataframe with NaN values'''
+    def create_df_with_nan(self):
+        dataframe = pd.DataFrame({'Column1':['value']*10,
+                                  'Column2':[np.nan]*10})
