@@ -78,3 +78,17 @@ shap.summary_plot(shap_values, df_test, plot_type = 'bar')
 
 fig.savefig('fig.png', dpi = 300, bbox_inches = 'tight')
 plt.close(fig)
+
+idx = 0
+
+instance_shap_values = shap_values[idx]
+instance_base_value = explainer.expected_value[idx]
+
+explanation = shap.Explanation(
+    values = instance_shap_values,
+    base_values = instance_base_value,
+    data = df_test.iloc[idx],
+    feature_names = df_test.columns.to_list()
+    )
+
+shap.plots.waterfall(explanation)
