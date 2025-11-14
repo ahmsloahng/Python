@@ -84,3 +84,23 @@ class Pandas:
     def create_df_with_nan(self):
         dataframe = pd.DataFrame({'Column1':['value']*10,
                                   'Column2':[np.nan]*10})
+
+'''Dictionary Questions
+1. I have a dataframe with a single column having index of anything. I want to convert the 
+dataframe to a dictionary where the keys will be the index and the values in column will be 
+values of the dictionary. The column name will not be used any where. How to do it?
+'''
+
+dic = pd.DataFrame({'Column':[1,2,3,4]}, index = ['row1','row2','row3','row4'])
+final_dic = dic['Column'].to_dict()
+
+'''Input: 
+      Column
+row1       1
+row2       2
+row3       3
+row4       4
+
+Output: {'row1': 1, 'row2': 2, 'row3': 3, 'row4': 4}
+'''
+
