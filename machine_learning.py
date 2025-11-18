@@ -73,6 +73,16 @@ def regression(data):
     model.fit(train_data, y_train) # Train the data
     model.predict(test_data) # Predict
     
+    '''Store and use model as a pickle file'''
+    import pickle
+    
+    pickle_file = 'pickle_file.pkl'
+    with open(pickle_file, 'wb') as f:
+        pickle.dump(model, f)
+        
+    with open(pickle_file,'rb') as f:
+        model_load = pickle.load(f)
+    
 import statsmodel.formula.api as smf
 
 def quantile_regression(data, future_data):
@@ -88,3 +98,4 @@ def quantile_regression(data, future_data):
     model = smf.quantreg(formula, data) # define the model
     result = model.fit(q = quantile) # fit the model
     future = result.predict(future_data) # predict
+
