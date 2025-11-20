@@ -13,5 +13,5 @@ with open('file_name.json', 'r') as file_name:
     
 #Writing to json file
 with open('file_name.json', 'w') as f:
-    json.dumo(data, f, indent = 4)
+    json.dump(data, f, indent = 4)
     
