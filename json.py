@@ -8,10 +8,10 @@ Created on Tue Jun 22 20:26:13 2021
 import json
 
 #Reading from json file
-with open('file_name') as file_name:
+with open('file_name.json', 'r') as file_name:
     data = json.load(file_name)
     
 #Writing to json file
-with open('file_name', 'w') as f:
-    f.write(json.dumps(data, indent = 2))
+with open('file_name.json', 'w') as f:
+    json.dumo(data, f, indent = 4)
     
