@@ -104,3 +104,32 @@ row4       4
 Output: {'row1': 1, 'row2': 2, 'row3': 3, 'row4': 4}
 '''
 
+'''
+2. I have a dataframe having 2 columns. I want to have the dataframe sorted in
+such a way that rows containing certain values from column 1 always appear on
+top.
+Input:
+    Column1 Column2
+    value1  0
+    value2  1
+    value3  2
+    value4  3
+    value5  4
+    
+Output:
+    Column1 Column2
+    value3  2
+    value5  4
+    value1  0
+    value2  1
+    value4  3
+'''
+
+df_2 = pd.DataFrame({'Column1':['value1','value2','value3','value4','value5'],
+                    'Column2':[0,1,2,3,4]})
+
+df_2_imp = df_2[df_2['Column1'].isin(['value3','value5'])]
+df_2_rem = df_2[~(df_2['Column1'].isin(['value3','value5']))]
+
+df_2 = pd.concat([df_2_imp,df_2_rem], ignore_index = True)
+
