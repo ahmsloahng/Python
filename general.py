@@ -75,3 +75,42 @@ df_final['PQI'] = 100 * (
     + 0.25 * df_final['velocity_score']
     + 0.20 * df_final['stability_score']
 )
+
+'''Make all possible combinations. Required for feature combination generation 
+for multivariate ML models.
+Input: {CPI:{1:[2,4,6],2:[],3:[3]},
+        Consumer Sentiment: {1:[1],2:[],3:[7,12]}}
+Outut: sim_set:
+    {1:[{CPI:1},{CPI:2},{CPI:1,Consumer Sentiment:1}]}, like that, all possible 
+    combinations
+'''
+import itertools
+from itertoools import combinations
+
+sim_lag_dic = None
+horizon = None
+
+power_set = []
+l_key = list(sim_lag_dic.keys())
+for i in range(1, len(l_key) + 1):
+    for combo in combinations(l_key, i):
+        power_set.append(list(combo))
+sim_set = {}
+
+for hzn in range(1, horizon + 1):
+    sim_set[hzn] = []
+for facs in power_set:
+    common_set = set([i for i in range(1, horizon + 1)])
+    for fac in facs:
+        common_set = common_set & set([h for h in sim_lag_dic[fac]])
+    hzn_l = list(common_set)
+    for hzn in hzn_l:
+        range_limits = [len(sim_lag_dic[i][hzn]) for i in facs]
+        iterables = [range(r) for r in range_limits]
+        for com in itertools.product(*iterables):
+            sim_dic = {}
+            for v in range(len(com)):
+                sim_dic[facs[v]] = sim_lag_dic[facs[v]][hzn][com[v]]
+            sim_set[hzn].append(sim_dic)
+
+
