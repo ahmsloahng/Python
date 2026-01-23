@@ -114,3 +114,16 @@ for facs in power_set:
             sim_set[hzn].append(sim_dic)
 
 
+'''I want to filter a dataframe on multiple conditions, all with &.'''
+from functools import reduce
+import operator
+
+df = None
+
+conditions = []
+for column in df.columns:
+    conditions.append((df[column].isna()))
+combined_condition = reduce(operator.and_, conditions)
+
+df_fil = df[combined_condition]
+
