@@ -118,7 +118,7 @@ for facs in power_set:
 from functools import reduce
 import operator
 
-df = None
+df = None # Let's defina any dataframe
 
 conditions = []
 for column in df.columns:
@@ -126,4 +126,9 @@ for column in df.columns:
 combined_condition = reduce(operator.and_, conditions)
 
 df_fil = df[combined_condition]
+
+'''merging two dictionary'''
+dic1 = None
+dic2 = None
+merge_dic = dic1 | dic2
 
