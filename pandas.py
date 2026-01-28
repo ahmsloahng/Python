@@ -133,3 +133,8 @@ df_2_rem = df_2[~(df_2['Column1'].isin(['value3','value5']))]
 
 df_2 = pd.concat([df_2_imp,df_2_rem], ignore_index = True)
 
+'''Convert a dictionary to dataframe where keys will be on column and values 
+will be another'''
+dic = None
+df = pd.DataFrame(list(dic.items()), columns = ['Column1','Column2'])
+
