@@ -113,22 +113,15 @@ for facs in power_set:
                 sim_dic[facs[v]] = sim_lag_dic[facs[v]][hzn][com[v]]
             sim_set[hzn].append(sim_dic)
 
-
-'''I want to filter a dataframe on multiple conditions, all with &.'''
-from functools import reduce
-import operator
-
-df = None # Let's defina any dataframe
-
-conditions = []
-for column in df.columns:
-    conditions.append((df[column].isna()))
-combined_condition = reduce(operator.and_, conditions)
-
-df_fil = df[combined_condition]
-
 '''merging two dictionary'''
 dic1 = None
 dic2 = None
 merge_dic = dic1 | dic2
 
+'''reverse a dictionary'''
+dic = None
+rev_dic = {i:j for j,i in dic.items()}
+
+'''remove blank spaces of a string'''
+string = 'Kol '
+string_noblank = string.strip()

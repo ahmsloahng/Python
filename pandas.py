@@ -138,3 +138,17 @@ will be another'''
 dic = None
 df = pd.DataFrame(list(dic.items()), columns = ['Column1','Column2'])
 
+'''I want to filter a dataframe on multiple conditions, all with &.'''
+from functools import reduce
+import operator
+
+df = None # Let's defina any dataframe
+
+conditions = []
+for column in df.columns:
+    conditions.append((df[column].isna()))
+combined_condition = reduce(operator.and_, conditions)
+
+df_fil = df[combined_condition]
+
+
