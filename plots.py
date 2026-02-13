@@ -5,13 +5,31 @@ Created on Sun Sep 14 07:58:28 2025
 @author: Amlan Ghosh
 """
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 class Plot:
     
     def _init_(self,df):
         self.df = df
     
-    '''1. Forest plot -> Matplotlib'''
+    '''Box plot -> Seaborn'''
+    def boxplot(self):
+        
+        '''Input: dataframe wih columns val1 and val2 where group by needs to 
+        be done by val1'''
+        
+        plt.figure(figsize = (10,6))
+        sns.boxplot(x = 'val1',
+                    y = 'val2',
+                    data = self.df,
+                    # showbliers helps to maintain or remove outliers from image
+                    showfliers = False)
+        plt.title('box plot')
+        plt.show()
+        plt.savefig('box plot.png')
+        
+
+    '''Forest plot -> Matplotlib'''
     def forest_plot(self):
         
         '''Input: dataframe with columns Factors,AOR, Lower CI and Upper CI'''
@@ -49,3 +67,4 @@ class Plot:
         plt.legend()
         plt.tight_layout()
         plt.show()
+        
